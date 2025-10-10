@@ -1,3 +1,12 @@
+// Load civilization data if not already available
+if (typeof g_CivData === 'undefined') {
+	try {
+		loadCivData();
+	} catch (e) {
+		error('Failed to load civilization data: ' + e.message);
+	}
+}
+
 const g_RandomCivGroups = loadRandomCivGroups().map((group) => {
 	if (group.Disable)
 		return null;
@@ -16,9 +25,12 @@ const g_RandomCivGroups = loadRandomCivGroups().map((group) => {
 			error(sprintf('Random civ group weights must be >= 0 (got "*": %d); disabling %s', std_weight, group.Title));
 			return null;
 		}
-		for (let civ in g_CivData) {
-			if (g_CivData[civ].SelectableInGameSetup)
-				weights[civ] = std_weight;
+		// Check if g_CivData is available before using it
+		if (typeof g_CivData !== 'undefined') {
+			for (let civ in g_CivData) {
+				if (g_CivData[civ].SelectableInGameSetup)
+					weights[civ] = std_weight;
+			}
 		}
 	}
 	for (let civ in group.Weights) {
@@ -28,7 +40,8 @@ const g_RandomCivGroups = loadRandomCivGroups().map((group) => {
 			error(sprintf('Random civ group weights must be >= 0 (got "%s": %d); disabling %s', civ, group.Weights[civ], group.Title));
 			return null;
 		}
-		if (g_CivData.hasOwnProperty(civ) && g_CivData[civ].SelectableInGameSetup)
+		// Check if g_CivData is available before using it
+		if (typeof g_CivData !== 'undefined' && g_CivData.hasOwnProperty(civ) && g_CivData[civ].SelectableInGameSetup)
 			weights[civ] = group.Weights[civ];
 		if (weights[civ] === 0)
 			delete weights[civ];

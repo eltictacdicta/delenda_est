@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Entity parent="template_player">
+  <Identity>
+    <Civ>germ</Civ>
+    <GenericName>Germans</GenericName>
+    <History>The Germanic tribes were a collection of ethnic groups inhabiting the northern parts of Europe. They were characterized by their shared Germanic language and culture. The tribes were often at war with the Roman Empire, but they also traded with it extensively. Some tribes were eventually incorporated into the Roman Empire as foederati, while others remained independent.</History>
+    <Icon>emblems/256/germans.png</Icon>
+  </Identity>
+</Entity>
